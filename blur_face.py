@@ -1,4 +1,5 @@
 from pyimagesearch.face_blurring import anonymize_face_simple
+from pyimagesearch.face_blurring import anonymize_face_pixelate
 import numpy as np
 import argparse
 import cv2
@@ -47,8 +48,11 @@ for i in range(0, detections.shape[2]):
         (startX, startY, endX, endY) = box.astype("int")
         face = image[startY:endY, startX:endX]
     
-    if args["method"] == "simple":
-			face = anonymize_face_simple(face, factor=3.0)
+  
+	if args["method"] == "simple": 
+		face = anonymize_face_simple(face)	
+	else:
+		face = anonymize_face_pixelate(face, blocks=args['blocks'])
     
     image[startY:endY, startX:endX] = face
 
